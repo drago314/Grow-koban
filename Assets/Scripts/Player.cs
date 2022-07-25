@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private Tilemap tileMap;
     [SerializeField] private Tile wallTile;
-    [SerializeField] private PlantParent plantParent;
+    [SerializeField] private Tile exitTile;
+    [SerializeField] private Plant plant;
 
 
     public void Move(Vector2 direction) {
@@ -15,10 +16,11 @@ public class Player : MonoBehaviour
         location = new Vector3Int(location.x + (int) direction.x, location.y + (int) direction.y, location.z);
 
 
-        if (tileMap.GetTile(location) != wallTile)
+        if (tileMap.GetTile(location) != wallTile && (tileMap.GetTile(location) != exitTile || (tileMap.GetTile(location) == exitTile && GoalZone.CanLeave())))
         {
-            bool hitPlant = plantParent.GetPlantPositionList().Contains(new Vector2(transform.position.x + direction.x, transform.position.y + direction.y));
-            if (hitPlant && plantParent.Move(direction))
+            Vector2 pushPosition = new Vector2(transform.position.x + direction.x, transform.position.y + direction.y);
+            bool hitPlant = plant.GetPlantPositionList().Contains(pushPosition);
+            if (hitPlant && plant.Move(direction, pushPosition))
             {
                 transform.position = new Vector3(transform.position.x + direction.x, transform.position.y + direction.y, transform.position.z);
             }
@@ -26,6 +28,12 @@ public class Player : MonoBehaviour
             {
                 transform.position = new Vector3(transform.position.x + direction.x, transform.position.y + direction.y, transform.position.z);
             }
+
+            if (tileMap.GetTile(location) == exitTile)
+            {
+                print("you win!");
+            }
         }
+
     }
 }

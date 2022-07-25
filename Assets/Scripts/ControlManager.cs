@@ -5,8 +5,9 @@ using UnityEngine.InputSystem;
 
 public class ControlManager : MonoBehaviour
 {
-    [SerializeField] private PlayerInput playerInput;
     [SerializeField] private Player player;
+    [SerializeField] private Plant plant;
+    [SerializeField] private List<GoalZone> goalList;
 
     [SerializeField] private float moveCooldown;
 
@@ -28,7 +29,10 @@ public class ControlManager : MonoBehaviour
             timeLastMoved = (float) Time.time;
             player.Move(moveDirection);
         }
-        
-    }
 
+        foreach (GoalZone goal in goalList)
+        {
+            goal.OnMove(plant);
+        }
+    }
 }

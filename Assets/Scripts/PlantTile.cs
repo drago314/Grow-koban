@@ -4,10 +4,21 @@ using UnityEngine;
 
 public class PlantTile : MonoBehaviour
 {
-    [SerializeField] private PlantParent parent;
+    [SerializeField] private Plant plant;
     
     private void Start()
     {
-        parent.AddPlantTile(this);
+        if (plant != null)
+        {
+            plant.AddPlantTile(this);
+        }
+    }
+    
+    public void SetParent(Plant _plant)
+    {
+        plant = _plant;
+        plant.AddPlantTile(this);
     }
 }
+
+
