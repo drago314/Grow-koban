@@ -1,19 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Tilemap tileMap;
+    [SerializeField] private Tile wallTile;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
+    public void Move(Vector2 direction) {
+        Vector3Int location = tileMap.WorldToCell(transform.position);
+        location = new Vector3Int(location.x + (int) direction.x, location.y + (int) direction.y, location.z);
+
+
+        if (tileMap.GetTile(location) != wallTile)
+        {
+            transform.position = new Vector3(transform.position.x + direction.x, transform.position.y + direction.y, transform.position.z);
+        }
+    }
 }
