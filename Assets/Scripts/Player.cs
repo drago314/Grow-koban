@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -31,7 +32,9 @@ public class Player : MonoBehaviour
 
             if (tileMap.GetTile(location) == exitTileOpen)
             {
-                print("you win!");
+                string sceneName = SceneManager.GetActiveScene().name;
+                int level = int.Parse(sceneName.Substring(6)) + 1;
+                SceneManager.LoadScene("Level " + level.ToString());
             }
         }
     }

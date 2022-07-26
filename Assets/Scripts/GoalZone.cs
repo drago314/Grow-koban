@@ -14,6 +14,7 @@ public class GoalZone : MonoBehaviour
 
     private void Awake()
     {
+        coveredGoals = new List<GoalZone>();
         totalGoals = 0;
     }
 
