@@ -8,7 +8,9 @@ public class Plant : MonoBehaviour
     [SerializeField] private GameObject plantPrefab;
     [SerializeField] private Tilemap tileMap;
     [SerializeField] private Tile wallTile;
-    [SerializeField] private Tile exitTile;
+    [SerializeField] private Tile exitTileClosed;
+    [SerializeField] private Tile exitTileOpen;
+
 
     private ArrayList plantTileList = new ArrayList();
 
@@ -21,7 +23,7 @@ public class Plant : MonoBehaviour
         {
             Vector3Int location = tileMap.WorldToCell(position);
             location = new Vector3Int(location.x + (int)direction.x, location.y + (int)direction.y, location.z);
-            if (tileMap.GetTile(location) == wallTile || tileMap.GetTile(location) == exitTile)
+            if (tileMap.GetTile(location) == wallTile || tileMap.GetTile(location) == exitTileClosed || tileMap.GetTile(location) == exitTileOpen)
             {
                 willMove = false;
             }
@@ -30,11 +32,11 @@ public class Plant : MonoBehaviour
         for (int i = 0; i < plantPositionList.Count; i++)
         {
             Vector3Int location = tileMap.WorldToCell(new Vector3(pushPosition.x + direction.x * 2, pushPosition.y + direction.y * 2, 0));
-            bool hittingWall = tileMap.GetTile(location) == wallTile || tileMap.GetTile(location) == exitTile;
+            bool hittingWall = tileMap.GetTile(location) == wallTile || tileMap.GetTile(location) == exitTileClosed || tileMap.GetTile(location) == exitTileOpen;
 
 
             location = tileMap.WorldToCell(new Vector3(direction.x + pushPosition.x, direction.y + pushPosition.y, 0));
-            bool growingIntoWall = tileMap.GetTile(location) == wallTile || tileMap.GetTile(location) == exitTile;
+            bool growingIntoWall = tileMap.GetTile(location) == wallTile || tileMap.GetTile(location) == exitTileClosed || tileMap.GetTile(location) == exitTileOpen;
 
             if ((Vector2) plantPositionList[i] == pushPosition && !plantPositionList.Contains(direction + pushPosition) && !hittingWall && !growingIntoWall)
             {

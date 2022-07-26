@@ -7,16 +7,16 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private Tilemap tileMap;
     [SerializeField] private Tile wallTile;
-    [SerializeField] private Tile exitTile;
+    [SerializeField] private Tile exitTileClosed;
+    [SerializeField] private Tile exitTileOpen;
     [SerializeField] private Plant plant;
-
 
     public void Move(Vector2 direction) {
         Vector3Int location = tileMap.WorldToCell(transform.position);
         location = new Vector3Int(location.x + (int) direction.x, location.y + (int) direction.y, location.z);
 
 
-        if (tileMap.GetTile(location) != wallTile && (tileMap.GetTile(location) != exitTile || (tileMap.GetTile(location) == exitTile && GoalZone.CanLeave())))
+        if (tileMap.GetTile(location) != wallTile && tileMap.GetTile(location) != exitTileClosed)
         {
             Vector2 pushPosition = new Vector2(transform.position.x + direction.x, transform.position.y + direction.y);
             bool hitPlant = plant.GetPlantPositionList().Contains(pushPosition);
@@ -29,11 +29,10 @@ public class Player : MonoBehaviour
                 transform.position = new Vector3(transform.position.x + direction.x, transform.position.y + direction.y, transform.position.z);
             }
 
-            if (tileMap.GetTile(location) == exitTile)
+            if (tileMap.GetTile(location) == exitTileOpen)
             {
                 print("you win!");
             }
         }
-
     }
 }
