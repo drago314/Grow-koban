@@ -439,7 +439,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 453436275}
   plant: {fileID: 405249191}
-  exit: {fileID: 0}
   goalList:
   - {fileID: 1886559822}
   moveCooldown: 0

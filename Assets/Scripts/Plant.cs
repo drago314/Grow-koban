@@ -38,14 +38,12 @@ public class Plant : MonoBehaviour
 
             if ((Vector2) plantPositionList[i] == pushPosition && !plantPositionList.Contains(direction + pushPosition) && !hittingWall && !growingIntoWall)
             {
-                GameObject plantTile = Instantiate(plantPrefab, new Vector3(direction.x + pushPosition.x, direction.y + pushPosition.y, 0), Quaternion.identity, transform);
-                plantTile.GetComponent<PlantTile>().SetParent(this);
+                GrowPlant(new Vector3(direction.x + pushPosition.x, direction.y + pushPosition.y, 0), direction);
                 break;
             }
             else if ((Vector2)plantPositionList[i] == pushPosition && !plantPositionList.Contains(direction + pushPosition) && !willMove && !growingIntoWall)
             {
-                GameObject plantTile = Instantiate(plantPrefab, new Vector3(direction.x + pushPosition.x, direction.y + pushPosition.y, 0), Quaternion.identity, transform);
-                plantTile.GetComponent<PlantTile>().SetParent(this);
+                GrowPlant(new Vector3(direction.x + pushPosition.x, direction.y + pushPosition.y, 0), direction);
                 break;
             }
             else if ((Vector2) plantPositionList[i] == pushPosition)
@@ -61,6 +59,24 @@ public class Plant : MonoBehaviour
         }
 
         return willMove;
+    }
+
+    public void GrowPlant(Vector3 position, Vector2 direction)
+    {
+        GameObject plantTile = Instantiate(plantPrefab, position, Quaternion.identity, transform);
+        plantTile.GetComponent<PlantTile>().SetParent(this);
+        if (direction == Vector2.right)
+        {
+            plantTile.transform.Rotate(0, 0, 270);
+        }
+        else if (direction == Vector2.down)
+        {
+            plantTile.transform.Rotate(0, 0, 180);
+        }
+        else if (direction == Vector2.left)
+        {
+            plantTile.transform.Rotate(0, 0, 90);
+        }
     }
 
     public void AddPlantTile(PlantTile plant)
