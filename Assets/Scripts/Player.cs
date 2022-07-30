@@ -12,12 +12,14 @@ public class Player : MonoBehaviour
     [SerializeField] private Tile exitTileOpen;
     [SerializeField] private Plant plant;
 
+    private bool canMove = true;
+
     public void Move(Vector2 direction) {
         Vector3Int location = tileMap.WorldToCell(transform.position);
         location = new Vector3Int(location.x + (int) direction.x, location.y + (int) direction.y, location.z);
 
 
-        if (tileMap.GetTile(location) != wallTile && tileMap.GetTile(location) != exitTileClosed)
+        if (tileMap.GetTile(location) != wallTile && tileMap.GetTile(location) != exitTileClosed && canMove)
         {
             Vector2 pushPosition = new Vector2(transform.position.x + direction.x, transform.position.y + direction.y);
             bool hitPlant = plant.GetPlantPositionList().Contains(pushPosition);
@@ -34,7 +36,17 @@ public class Player : MonoBehaviour
             {
                 string sceneName = SceneManager.GetActiveScene().name;
                 int level = int.Parse(sceneName.Substring(6)) + 1;
-                SceneManager.LoadScene("Level " + level.ToString());
+                LevelTransitioner levelTransitioner = FindObjectOfType<LevelTransitioner>();
+                if (level < 11)
+                {
+                    levelTransitioner.LoadLevel("Level " + level.ToString());
+                    canMove = false;
+                }
+                else
+                {
+                    levelTransitioner.LoadLevel("Winning Screen");
+                    canMove = false;
+                }
             }
         }
     }

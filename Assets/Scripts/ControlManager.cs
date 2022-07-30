@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class ControlManager : MonoBehaviour
 {
@@ -49,5 +50,10 @@ public class ControlManager : MonoBehaviour
             Vector3Int location = tileMap.WorldToCell(new Vector3(exitPosition.x, exitPosition.y, 0));
             tileMap.SetTile(location, exitTileClosed);
         }
+    }
+
+    public void Reset(InputAction.CallbackContext context)
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
