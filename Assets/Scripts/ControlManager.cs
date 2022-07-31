@@ -20,14 +20,23 @@ public class ControlManager : MonoBehaviour
     private float timeLastMoved = -1;
 
     public void Move(InputAction.CallbackContext context) {
-        Vector2 inputDirection = context.ReadValue<Vector2>();
         Vector2 moveDirection = Vector2.zero;
-        if (Mathf.Abs(inputDirection.x) > 0.5) {
-            moveDirection.x = Mathf.Sign(inputDirection.x);
-        }
-        else if (Mathf.Abs(inputDirection.y) > 0.5)
+        
+        if (context.control.displayName == "W" && context.control.IsPressed())
         {
-            moveDirection.y = Mathf.Sign(inputDirection.y);
+            moveDirection = Vector2.up;
+        }
+        else if (context.control.displayName == "D" && context.control.IsPressed())
+        {
+            moveDirection = Vector2.right;
+        }
+        else if (context.control.displayName == "A" && context.control.IsPressed())
+        {
+            moveDirection = Vector2.left;
+        }
+        else if (context.control.displayName == "S" && context.control.IsPressed())
+        {
+            moveDirection = Vector2.down;
         }
 
         if ((float) Time.time - timeLastMoved > moveCooldown) {
