@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
                 string sceneName = SceneManager.GetActiveScene().name;
                 int level = int.Parse(sceneName.Substring(6)) + 1;
                 LevelTransitioner levelTransitioner = FindObjectOfType<LevelTransitioner>();
-                if (level < 11)
+                if (level < 12)
                 {
                     levelTransitioner.LoadLevel("Level " + level.ToString());
                     canMove = false;
